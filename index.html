@@ -3,23 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Скидки Маркета | Выгодные покупки с рейтингом 4.5+</title>
-    <meta name="description" content="Скидки на Яндекс Маркет до 70%. Только товары с рейтингом 4.5+ звезд. Акции и распродажи каждый день.">
+    <title>Скидки Маркета | Выгодные покупки</title>
+    <meta name="description" content="Скидки на Яндекс Маркет до 70%. Тематические подборки товаров с высоким рейтингом.">
+    
+    <!-- VK Open API -->
     <script src="https://vk.com/js/api/openapi.js?169"></script>
+    
+    <!-- VK Bridge -->
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app">
         <!-- Шапка -->
         <header class="header">
-            <h1>💰 Скидки Маркета</h1>
-            <p>⭐️ Только товары с рейтингом 4.5+</p>
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">💰</span>
+                    <span class="logo-text">Скидки Маркета</span>
+                </div>
+                <p class="tagline">Выгодные покупки на Яндекс Маркете</p>
+                <div id="categoryBadge" class="category-badge">
+                    🔥 ГОРЯЧИЕ СКИДКИ 🔥
+                </div>
+            </div>
         </header>
 
         <!-- Основной контент -->
         <main class="main">
-            <div id="discountsList" class="loading">
-                🔍 Ищем лучшие предложения...
+            <div id="discountsContainer">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>🔍 Ищем лучшие предложения...</p>
+                </div>
             </div>
         </main>
 
