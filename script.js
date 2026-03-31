@@ -20,23 +20,13 @@ function formatPrice(price) {
  */
 function formatRating(rating, count = null) {
     if (!rating || rating === 0) {
-        return { stars: '☆☆☆☆☆', text: 'Нет отзывов' };
+        return '⭐ Нет отзывов';
     }
-    
-    const full = Math.floor(rating);
-    const half = rating % 1 >= 0.5 ? 1 : 0;
-    const empty = 5 - full - half;
-    
-    let stars = '⭐'.repeat(full);
-    if (half) stars += '½';
-    stars += '☆'.repeat(empty);
-    
-    let text = `${rating}`;
-    if (count) {
+    let text = `⭐ ${rating}`;
+    if (count && count > 0) {
         text += ` (${count} отзывов)`;
     }
-    
-    return { stars, text };
+    return text;
 }
 
 /**
@@ -117,8 +107,7 @@ function renderOfferCard(offer) {
             <div class="card-info">
                 <div class="card-title">${escapeHtml(offer.name)}</div>
                 <div class="rating">
-                    <span class="rating-stars">${stars}</span>
-                    <span class="rating-value">${offer.rating}</span>
+                    ${formatRating(offer.rating, offer.rating_count)}
                 </div>
                 <div class="price">
                     <span class="old-price">${formatPrice(offer.old_price)}</span>
