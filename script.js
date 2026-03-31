@@ -3,7 +3,7 @@
 // ========== НАСТРОЙКИ ==========
 const GROUP_ID = 'skidki_marketa';
 const VK_APP_ID = 54508911;  // App ID
-const API_URL = 'https://skidki-market-api.onrender.com';  // URL бэкенда
+const API_URL = 'https://skidki-market-api.onrender.com/api/discounts';  // URL бэкенда
 
 // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
 
