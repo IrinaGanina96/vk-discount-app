@@ -241,7 +241,8 @@ function init() {
     }
     
     if (typeof VK !== 'undefined') {
-        VK.init({ apiId: VK_APP_ID, hideDefaultButtons: true });
+        VK.init({ apiId: VK_APP_ID });
     }
+}
 
 document.addEventListener('DOMContentLoaded', init);
