@@ -1,23 +1,17 @@
-
+// script.js - вся логика VK Mini App с VK Bridge
 
 // ========== НАСТРОЙКИ ==========
 const GROUP_ID = 'skidki_marketa';
-const VK_APP_ID = 54508911;  // App ID
-const API_URL = 'https://skidki-market-api.onrender.com/api/discounts';  // URL бэкенда
+const VK_APP_ID = 54508911;
+const API_URL = 'https://skidki-market-api.onrender.com/api/discounts';
 
 // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
 
-/**
- * Форматирует цену с пробелами
- */
 function formatPrice(price) {
     if (!price || price === 0) return 'Цена не указана';
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽';
 }
 
-/**
- * Форматирует рейтинг: одна звезда + цифра + количество отзывов
- */
 function formatRating(rating, count = null) {
     if (!rating || rating === 0) {
         return '⭐ Нет отзывов';
@@ -29,9 +23,6 @@ function formatRating(rating, count = null) {
     return text;
 }
 
-/**
- * Получает название категории для отображения
- */
 function getCategoryDisplay(category) {
     const categories = {
         'супер-скидки': '💥 СУПЕР-СКИДКИ 70%+ 💥',
@@ -46,29 +37,19 @@ function getCategoryDisplay(category) {
         'товары для дома': '🏡 ТОВАРЫ ДЛЯ ДОМА',
         'разное': '🔥 ЛУЧШИЕ ПРЕДЛОЖЕНИЯ'
     };
-    
     return categories[category] || '🔥 ГОРЯЧИЕ СКИДКИ 🔥';
 }
 
-/**
- * Открывает ссылку на товар
- */
 function openProduct(url) {
     if (url) {
         window.open(url, '_blank');
     }
 }
 
-/**
- * Открывает сообщество VK
- */
 function openCommunity() {
     window.open(`https://vk.com/${GROUP_ID}`, '_blank');
 }
 
-/**
- * Возвращает случайное вступление для скидки
- */
 function getDiscountIntro(discount) {
     const intros = [
         `Скидка ${discount}% — это отличный повод!`,
@@ -81,9 +62,6 @@ function getDiscountIntro(discount) {
     return intros[Math.floor(Math.random() * intros.length)];
 }
 
-/**
- * Экранирует HTML для безопасности
- */
 function escapeHtml(text) {
     if (!text) return '';
     const div = document.createElement('div');
@@ -91,11 +69,7 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-/**
- * Рендерит карточку товара
- */
 function renderOfferCard(offer) {
-    const { stars, text: ratingText } = formatRating(offer.rating);
     const discountIntro = getDiscountIntro(offer.discount);
     const pictureUrl = offer.picture || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"%3E%3Crect width="80" height="80" fill="%23f0f0f0"/%3E%3Ctext x="40" y="45" text-anchor="middle" fill="%23999" font-size="12"%3E🛍️%3C/text%3E%3C/svg%3E';
     
@@ -125,9 +99,6 @@ function renderOfferCard(offer) {
 
 // ========== ЗАГРУЗКА СКИДОК ==========
 
-/**
- * Загружает и отображает скидки из API
- */
 async function loadDiscounts() {
     const container = document.getElementById('discountsContainer');
     if (!container) return;
@@ -179,9 +150,6 @@ async function loadDiscounts() {
 
 // ========== СТРАНИЦЫ ==========
 
-/**
- * Показывает страницу подписки
- */
 function showSubscribe() {
     const container = document.getElementById('discountsContainer');
     if (!container) return;
@@ -201,9 +169,6 @@ function showSubscribe() {
     `;
 }
 
-/**
- * Показывает страницу о нас
- */
 function showInfo() {
     const container = document.getElementById('discountsContainer');
     if (!container) return;
@@ -234,9 +199,6 @@ function showInfo() {
 
 // ========== НАВИГАЦИЯ ==========
 
-/**
- * Инициализирует навигацию по вкладкам
- */
 function initNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn');
     
@@ -259,37 +221,28 @@ function initNavigation() {
 
 // ========== ИНИЦИАЛИЗАЦИЯ VK BRIDGE ==========
 
-/**
- * Инициализирует приложение и VK Bridge
- */
 function init() {
-    // Инициализация VK Bridge (обязательно для модерации)
     if (typeof vkBridge !== 'undefined') {
         vkBridge.send('VKWebAppInit', {})
             .then(() => {
                 console.log('✅ VK Bridge инициализирован успешно');
-                // После успешной инициализации загружаем контент
                 initNavigation();
                 loadDiscounts();
             })
             .catch((error) => {
                 console.error('❌ Ошибка инициализации VK Bridge:', error);
-                // Даже при ошибке пробуем загрузить контент
                 initNavigation();
                 loadDiscounts();
             });
     } else {
         console.warn('⚠️ VK Bridge не загружен');
-        // Загружаем контент без VK Bridge (для локальной разработки)
         initNavigation();
         loadDiscounts();
     }
     
-    // Инициализация VK Open API
     if (typeof VK !== 'undefined') {
         VK.init({ apiId: VK_APP_ID });
     }
 }
 
-// Запускаем приложение
 document.addEventListener('DOMContentLoaded', init);
