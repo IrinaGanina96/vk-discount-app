@@ -378,3 +378,19 @@ body {
         font-size: 20px;
     }
 }
+
+
+.subscribe-btn {
+    background: #FF6B6B !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    border-radius: 30px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    width: 100% !important;
+}
+.subscribe-btn:active {
+    background: #e55a5a !important;
+}
